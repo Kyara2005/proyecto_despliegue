@@ -1,0 +1,129 @@
+.dashboard-section {
+    font-family: 'Poppins', sans-serif;
+    background-color: #E1BEE7;
+    padding: 20px 10px;
+    text-align: center;
+    min-height: 100vh;
+
+}
+.dashboard-header h2 {
+    font-size: 2.5em;
+    color: #4a4e69;
+    margin-bottom: 10px;
+}
+.dashboard-header p {
+    font-size: 1.1em;
+    color: #6a6a6a;
+    margin-bottom: 25px;
+}
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.dashboard-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.dashboard-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+.card-title {
+    font-size: 1.6em;
+    color: #7663e0;
+    margin-bottom: 15px;
+}
+.dashboard-card p {
+    color: #6a6a6a;
+    font-size: 1em;
+    line-height: 1.6;
+}
+.dashboard-btn {
+    background-color: #7663e0;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+}
+.dashboard-btn:hover {
+    background-color: #5d49c8;
+    transform: scale(1.05);
+}
+.events-card { border-left: 5px solid #ff7f50; }
+.groups-card { border-left: 5px solid #48c9b0; }
+.matches-card { border-left: 5px solid #e74c3c; }
+@media (max-width: 768px) {
+    .dashboard-header h2 {
+        font-size: 2em;
+    }
+}
+.dashboard-header {
+    position: relative;
+    width: 100%;
+    padding: 40px 20px 20px 20px; /* 🔹 Más espacio arriba */
+}
+
+/* Contenedor del botón */
+.logout-container {
+    position: absolute;
+    top: 20px;  /* 🔹 Espacio desde arriba */
+    right: 5%; /* 🔹 Espacio desde la derecha */
+}
+
+/* Estilo del botón con fondo difuminado */
+.logout-btn {
+    background: linear-gradient(135deg, #00b7ff, #002fff, #0048ff); /* 🔹 Gradiente suave */
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 🔹 Sombra ligera */
+    backdrop-filter: blur(4px); /* 🔹 efecto difuminado */
+    transition: all 0.3s ease;
+}
+
+/* Efecto al pasar el mouse */
+.logout-btn:hover {
+    background: linear-gradient(135deg, #ff4d4d, #ff8080);
+    transform: scale(1.05);
+}
+
+/* Estilo para la frase */
+.motivational-quote {
+    margin-top: 20px;
+    font-style: italic;
+    color: #0c0101;
+    background: #E1BEE7;
+    text-align: center;
+}
+.quote-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.quote-author {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 0;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
