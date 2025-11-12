@@ -135,3 +135,4 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ msg: "Error del servidor" });
   }
 });
+export default router;
