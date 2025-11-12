@@ -17,17 +17,11 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-        // Permite solicitudes sin 'origin' (por ejemplo, desde herramientas)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        } else {
-            return callback(new Error("CORS no permitido por el servidor"));
-        }
-    },
-    credentials: true
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
 }));
+
 
 app.use(express.json());
 

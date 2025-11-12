@@ -12,19 +12,14 @@ const Register = () => {
 
     // 🔹 Registro en backend
     const registerUser = async (dataForm) => {
-        const url = `${import.meta.env.VITE_BACKEND_URL}/register`;
-
         // Mapear los campos del formulario a lo que espera tu backend
         const body = {
             nombre: dataForm.name,
             correoInstitucional: dataForm.email,
             password: dataForm.password
         };
-        
-        console.log("URL del backend:", url);
-
         try {
-            const response = await fetchDataBackend(url, body, "POST");
+            const response = await fetchDataBackend("/register", body, "POST");
 
             if (response) {
                 toast.success(response.msg || "Registro exitoso 🎉", {

@@ -52,7 +52,7 @@ router.post("/register", async (req, res) => {
     if (nuevoUsuario.encryptPassword) {
       nuevoUsuario.password = await nuevoUsuario.encryptPassword(password);
     } else {
-       nuevoUsuario.password = password;
+      nuevoUsuario.password = password;
     }
 
     // Generar token de confirmación
@@ -77,64 +77,61 @@ router.post("/register", async (req, res) => {
 
 // --- CONFIRMAR CORREO ---
 router.get("/confirmar/:token", async (req, res) => {
-  try {
-    const { token } = req.params;
+  try {
+    const { token } = req.params;
 
-    const usuario = await Usuario.findOne({ token });
-    if (!usuario) {
-      return res.status(404).json({ msg: "Token inválido o ya confirmado." });
-    }
+    const usuario = await Usuario.findOne({ token });
+    if (!usuario) {
+      return res.status(404).json({ msg: "Token inválido o ya confirmado." });
+    }
 
-    usuario.token = null;
-    usuario.confirmEmail = true;
-    await usuario.save();
+    usuario.token = null;
+    usuario.confirmEmail = true;
+    await usuario.save();
 
-    res.status(200).json({ msg: "Cuenta confirmada correctamente." });
-  } catch (error) {
-    console.error("ERROR EN CONFIRMAR:", error);
-    res.status(500).json({ msg: "Error del servidor", error: error.message });
-  }
+    // ✅ Responder con JSON, no redirigir
+    res.status(200).json({ msg: "Cuenta confirmada correctamente." });
+  } catch (error) {
+    console.error("ERROR EN CONFIRMAR:", error);
+    res.status(500).json({ msg: "Error del servidor", error: error.message });
+  }
 });
 
 // --- LOGIN ---
 router.post("/login", async (req, res) => {
-  try {
-    const { correoInstitucional, password } = req.body;
+  try {
+    const { correoInstitucional, password } = req.body;
 
-    if (!correoInstitucional || !password) {
-      return res.status(400).json({ msg: "Todos los campos son obligatorios" });
-    }
+    if (!correoInstitucional || !password) {
+      return res.status(400).json({ msg: "Todos los campos son obligatorios" });
+    }
 
-    const usuario = await Usuario.findOne({ correoInstitucional });
-    if (!usuario) {
-      return res.status(400).json({ msg: "Usuario no encontrado" });
-    }
-    
-    // Asumiendo que matchPassword está disponible en el modelo
-    const match = await usuario.matchPassword(password); 
-    if (!match) {
-      return res.status(400).json({ msg: "Contraseña incorrecta" });
-    }
+    const usuario = await Usuario.findOne({ correoInstitucional });
+    if (!usuario) {
+      return res.status(400).json({ msg: "Usuario no encontrado" });
+    }
 
-    if (!usuario.confirmEmail) {
-      return res.status(400).json({
-        msg: "Debes confirmar tu cuenta por correo antes de iniciar sesión.",
-      });
-    }
+    if (usuario.password !== password) {
+      return res.status(400).json({ msg: "Contraseña incorrecta" });
+    }
 
-    const token = jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    if (!usuario.confirmEmail) {
+      return res.status(400).json({
+        msg: "Debes confirmar tu cuenta por correo antes de iniciar sesión.",
+      });
+    }
 
-    res.json({
-      token,
-      nombre: usuario.nombre,
-      correoInstitucional: usuario.correoInstitucional,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Error del servidor" });
-  }
+    const token = jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.json({
+      token,
+      nombre: usuario.nombre,
+      correoInstitucional: usuario.correoInstitucional,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Error del servidor" });
+  }
 });
-
-export default router;
